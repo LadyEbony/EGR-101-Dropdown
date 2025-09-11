@@ -1,0 +1,20 @@
+using UnityEngine;
+
+public class DropBall : MonoBehaviour
+{
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false; // no gravity at start
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) // press space to drop
+        {
+            rb.useGravity = true; // gravity turns on
+        }
+    }
+}
