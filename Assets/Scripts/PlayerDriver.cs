@@ -5,10 +5,16 @@ using UnityEngine;
 public class PlayerDriver : MonoBehaviour {
 
     public static PlayerDriver Instance { get; private set; }
-    public new Rigidbody rigidbody;
+    public CharacterController characterController;
 
     public float horizontalSpeed = 10f;
     public float veritcalSpeed = -10f;
+
+    [Header("Pushback")]
+    public float pushBackSpeed = 20f;
+    public float pushBackDampSpeed = 40f;
+
+    public Vector3 pushBackVelocity;
 
     private void Awake() {
         Instance = this;
@@ -16,14 +22,33 @@ public class PlayerDriver : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        
+        var i = GetInput();
+
+        // this is the offset that we will move the player every frame
+        // we scale the offset by Time.deltaTime so the offset is consistent every frame
+        var offset = new Vector3(i.horizontal * horizontalSpeed, veritcalSpeed) * Time.deltaTime;
+
+        offset += pushBackVelocity * Time.deltaTime;
+        pushBackVelocity = Vector3.MoveTowards(pushBackVelocity, Vector3.zero, Time.deltaTime * pushBackDampSpeed);
+
+        // we can call character controller move every update
+        characterController.Move(offset);
+
+        // prevent player from moving in the z axis
+        // kinda technically
+        var pos = transform.position;
+        pos.z = 0f;
+        transform.position = pos;
     }
 
-    private void FixedUpdate()
+    public const int WALL_LAYER = 8;
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        var i = GetInput();
-        var offset = new Vector3(i.horizontal * horizontalSpeed, veritcalSpeed) * Time.fixedDeltaTime;
-        rigidbody.MovePosition(rigidbody.position + offset);
+        if (hit.gameObject.layer == WALL_LAYER)
+        {
+            pushBackVelocity = hit.normal * pushBackSpeed;
+        }
     }
 
     // we can extend this struct to whatever input we need to register
