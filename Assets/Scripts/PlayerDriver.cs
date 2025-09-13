@@ -8,7 +8,13 @@ public class PlayerDriver : MonoBehaviour {
     public CharacterController characterController;
 
     public float horizontalSpeed = 10f;
-    public float veritcalSpeed = -10f;
+
+    // normal vertical speed
+    public float normalVerticalSpeed = -10f;
+
+    // slow fall method
+    public float slowFallVerticalSpeed = -5f;
+    public bool isSlowFalling = false;
 
     [Header("Pushback")]
     public float pushBackSpeed = 20f;
@@ -26,7 +32,7 @@ public class PlayerDriver : MonoBehaviour {
 
         // this is the offset that we will move the player every frame
         // we scale the offset by Time.deltaTime so the offset is consistent every frame
-        var offset = new Vector3(i.horizontal * horizontalSpeed, veritcalSpeed) * Time.deltaTime;
+        var offset = new Vector3(i.horizontal * horizontalSpeed, normalVerticalSpeed) * Time.deltaTime;
 
         offset += pushBackVelocity * Time.deltaTime;
         pushBackVelocity = Vector3.MoveTowards(pushBackVelocity, Vector3.zero, Time.deltaTime * pushBackDampSpeed);
@@ -39,7 +45,19 @@ public class PlayerDriver : MonoBehaviour {
         var pos = transform.position;
         pos.z = 0f;
         transform.position = pos;
-    }
+
+        // check method for slow fall
+        if (Input.GetKeyCode.W)) {
+        verticalSpeed = slowFallVerticalSpeed;
+        isSlowFalling = true;
+
+        // someone can add falling animation and effects here
+        }
+        else
+        {
+        verticalSpeed = normalVerticalSpeed;
+        isSlowFalling = false;
+        }
 
     public const int WALL_LAYER = 8;
 
