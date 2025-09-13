@@ -22,6 +22,11 @@ public class PlayerDriver : MonoBehaviour {
 
     public Vector3 pushBackVelocity;
 
+    // collision variables for enemies and projectiles
+    public int health = 3;
+    public float invincibilityTime = 1f;
+    private float invincibleUntil = 0f;
+
     private void Awake() {
         Instance = this;
     }
@@ -66,6 +71,37 @@ public class PlayerDriver : MonoBehaviour {
         if (hit.gameObject.layer == WALL_LAYER)
         {
             pushBackVelocity = hit.normal * pushBackSpeed;
+        }
+        else if (hit.gameObject.CompareTag("Enemy") || hit.gameObject.CompareTag("EnemyProjectile"))
+        {
+            TakeDamage();
+            if (hit.gameObject.CompareTag("EnemyProjectile"))
+            {
+                Destroy(hit.gameObject);
+            }
+        }
+        else if (hit.gameObject.CompareTag("Vine"))
+        {
+            verticalSpeed = Mathf.Max(verticalSpeed, -3f);
+        }
+
+        void TakeDamage()
+        {
+        if (Time.time < invincibilityUntil) return;
+            health --;
+            invincibilityUntil = Time.time + invincibilityTime;
+
+            // visual effects for taking damage can be added here
+
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
+
+        void Die()
+        {
+            Debug.Log("Player died");
         }
     }
 
