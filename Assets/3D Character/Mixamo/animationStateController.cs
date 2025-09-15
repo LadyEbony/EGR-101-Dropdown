@@ -8,7 +8,7 @@ public class animationStateController : MonoBehaviour
     Animator animator;
     int isRunningHash;
     int isFallingHash;
-    public float groundCheckDistance = 7.2f;
+    public float groundCheckDistance = 1f;
     public LayerMask groundMask;
 
     // Start is called before the first frame update
@@ -24,10 +24,7 @@ public class animationStateController : MonoBehaviour
     {
         bool isRunning = animator.GetBool(isRunningHash);
         bool forwardPressed = Input.GetKey("d");
-        bool isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundMask);
-
-        // update animator
-        animator.SetBool(isFallingHash, !isGrounded);
+        bool parachutePressed = Input.GetKey("w");
 
         // if player presses w key
         if (!isRunning && forwardPressed)
@@ -41,5 +38,24 @@ public class animationStateController : MonoBehaviour
             // then set the isRunning boolean to be false
             animator.SetBool(isRunningHash, false);
         }
+        // add offset so ray starts at feet
+        Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
+        bool isGrounded = Physics.Raycast(rayOrigin, Vector3.down, groundCheckDistance, groundMask);
+        animator.SetBool(isFallingHash,!isGrounded);
+
+        //Parachuting logic
+        if (!isGrounded && parachutePressed)
+        {
+            animator.SetBool("isParachuting", true);
+        }
+        else
+        {
+            animator.SetBool("isParachuting", false);
+        }
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, Vector3.down * groundCheckDistance);
     }
 }
