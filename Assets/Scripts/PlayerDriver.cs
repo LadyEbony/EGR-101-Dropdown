@@ -62,7 +62,7 @@ public class PlayerDriver : MonoBehaviour {
         transform.position = pos;
 
         // check method for slow fall
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             verticalSpeed = slowFallVerticalSpeed;
             isSlowFalling = true;
