@@ -56,23 +56,21 @@ public class AnisotropicKuwaharaFeature : ScriptableRendererFeature
 
         public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
         {
-            if (mat == null) return;
+            // Keep pass material in sync with the serialized settings
+            mat = settings.Material;
 
             var desc = renderingData.cameraData.cameraTargetDescriptor;
             desc.depthBufferBits = 0;
             desc.msaaSamples = 1;
             desc.enableRandomWrite = false;
-
-            // choose float precision for intermediates
             desc.graphicsFormat = settings.UseFloatRT
                 ? UnityEngine.Experimental.Rendering.GraphicsFormat.R32G32B32A32_SFloat
                 : UnityEngine.Experimental.Rendering.GraphicsFormat.R16G16B16A16_SFloat;
 
             RenderingUtils.ReAllocateIfNeeded(ref rtEigen, desc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_AK_Eigen");
             RenderingUtils.ReAllocateIfNeeded(ref rtBlurX, desc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_AK_BlurX");
-            RenderingUtils.ReAllocateIfNeeded(ref rtTFM,   desc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_AK_TFM");
+            RenderingUtils.ReAllocateIfNeeded(ref rtTFM, desc, FilterMode.Bilinear, TextureWrapMode.Clamp, name: "_AK_TFM");
 
-            // final color — match camera color format
             var finalDesc = renderingData.cameraData.cameraTargetDescriptor;
             finalDesc.depthBufferBits = 0;
             finalDesc.msaaSamples = 1;
@@ -81,9 +79,19 @@ public class AnisotropicKuwaharaFeature : ScriptableRendererFeature
 
         public override void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
+            // Skip unsupported cameras (fixes errors when inspecting the material)
+            var camData = renderingData.cameraData;
+            var camType = camData.cameraType;
+            if (camData.isPreviewCamera || camType == CameraType.Reflection || camType == CameraType.Preview)
+                return;
+
+            // Sync material reference in case it changed in the Inspector
+            mat = settings.Material;
             if (mat == null) return;
 
-            var src = renderingData.cameraData.renderer.cameraColorTargetHandle;
+            var src = camData.renderer.cameraColorTargetHandle;
+            if (src.rt == null) return;                         // source must exist
+            if (rtEigen == null || rtBlurX == null || rtTFM == null || rtFinal == null) return; // targets 
 
             var cmd = CommandBufferPool.Get(profilerTag);
 
@@ -143,6 +151,9 @@ public class AnisotropicKuwaharaFeature : ScriptableRendererFeature
 
     public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
     {
+        // reflect inspector changes
+        pass.renderPassEvent = settings.Event;
+
         if (settings.Material == null) return;
         renderer.EnqueuePass(pass);
     }
