@@ -8,7 +8,7 @@ public class PlayerDriver : MonoBehaviour {
     public CharacterController characterController;
 
     public float horizontalSpeed = 10f;
-    public float veritcalSpeed = -10f;
+    public float verticalSpeed = -10f;
     public float horizontalAccelerationSpeed = 80f;
     public float verticalAccelerationSpeed = -9.8f;
 
@@ -41,12 +41,12 @@ public class PlayerDriver : MonoBehaviour {
         var i = GetInput();
 
         velocity += new Vector3(i.horizontal * horizontalAccelerationSpeed, verticalAccelerationSpeed) * Time.deltaTime;
-        velocity.y = Mathf.Clamp(velocity.y, veritcalSpeed, 0);
+        velocity.y = Mathf.Clamp(velocity.y, verticalSpeed, 0);
+
         //Debug.Log(velocity);
         // this is the offset that we will move the player every frame
         // we scale the offset by Time.deltaTime so the offset is consistent every frame
         var offset = velocity * Time.deltaTime;
-        var offset = new Vector3(i.horizontal * horizontalSpeed, normalVerticalSpeed) * Time.deltaTime;
 
         offset += pushBackVelocity * Time.deltaTime;
         pushBackVelocity = Vector3.MoveTowards(pushBackVelocity, Vector3.zero, Time.deltaTime * pushBackDampSpeed);
@@ -62,7 +62,7 @@ public class PlayerDriver : MonoBehaviour {
         transform.position = pos;
 
         // check method for slow fall
-        if (Input.GetKeyCode.W)
+        if (Input.GetKeyDown(KeyCode.W))
         {
             verticalSpeed = slowFallVerticalSpeed;
             isSlowFalling = true;
@@ -99,9 +99,9 @@ public class PlayerDriver : MonoBehaviour {
 
         void TakeDamage()
         {
-        if (Time.time < invincibilityUntil) return;
+        if (Time.time < invincibleUntil) return;
             health --;
-            invincibilityUntil = Time.time + invincibilityTime;
+            invincibleUntil = Time.time + invincibilityTime;
 
             // visual effects for taking damage can be added here
 
