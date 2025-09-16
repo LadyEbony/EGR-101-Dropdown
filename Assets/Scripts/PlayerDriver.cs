@@ -36,7 +36,8 @@ public class PlayerDriver : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         var i = GetInput();
 
         velocity += new Vector3(i.horizontal * horizontalAccelerationSpeed, verticalAccelerationSpeed) * Time.deltaTime;
@@ -61,17 +62,19 @@ public class PlayerDriver : MonoBehaviour {
         transform.position = pos;
 
         // check method for slow fall
-        if (Input.GetKeyCode.W)) {
-        verticalSpeed = slowFallVerticalSpeed;
-        isSlowFalling = true;
+        if (Input.GetKeyCode.W)
+        {
+            verticalSpeed = slowFallVerticalSpeed;
+            isSlowFalling = true;
 
-        // someone can add falling animation and effects here
+            // someone can add falling animation and effects here
         }
         else
         {
-        verticalSpeed = normalVerticalSpeed;
-        isSlowFalling = false;
+            verticalSpeed = normalVerticalSpeed;
+            isSlowFalling = false;
         }
+    }
 
     public const int WALL_LAYER = 8;
 
