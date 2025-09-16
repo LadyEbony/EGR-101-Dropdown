@@ -751,13 +751,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterController: {fileID: 910988960}
   horizontalSpeed: 10
-  veritcalSpeed: -10
+  verticalSpeed: -10
   horizontalAccelerationSpeed: 80
   verticalAccelerationSpeed: -9.8
+  normalVerticalSpeed: -10
+  slowFallVerticalSpeed: -5
+  isSlowFalling: 0
   pushBackSpeed: 40
   pushBackDampSpeed: 320
   velocity: {x: 0, y: 0, z: 0}
   pushBackVelocity: {x: 0, y: 0, z: 0}
+  health: 3
+  invincibilityTime: 1
 --- !u!143 &910988960
 CharacterController:
   m_ObjectHideFlags: 0
