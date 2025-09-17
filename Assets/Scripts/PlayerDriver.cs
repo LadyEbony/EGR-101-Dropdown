@@ -20,7 +20,7 @@ public class PlayerDriver : MonoBehaviour {
     public bool isSlowFalling = false;
 
     [Header("Pushback")]
-    public float pushBackSpeed = 20f; //10f might be better
+    public float pushBackSpeed = 20f; 
     public float pushBackDampSpeed = 40f;
 
     public Vector3 velocity;
@@ -48,9 +48,9 @@ public class PlayerDriver : MonoBehaviour {
         // we scale the offset by Time.deltaTime so the offset is consistent every frame
         var offset = velocity * Time.deltaTime;
 
-        offset += pushBackVelocity * Time.deltaTime;
+        offset += pushBackVelocity * Time.deltaTime * 0.33f; // 0.33 is dampening factor; not sure it helps
         pushBackVelocity = Vector3.MoveTowards(pushBackVelocity, Vector3.zero, Time.deltaTime * pushBackDampSpeed);
-        //pushBackVelocity.x = Mathf.Clamp(pushBackVelocity.x, 7, 0); // Mot sure this does anything
+        //pushBackVelocity.x = Mathf.Clamp(pushBackVelocity.x, 7, 0); // Not sure this does anything
 
         // we can call character controller move every update
         characterController.Move(offset);
@@ -128,8 +128,8 @@ public class PlayerDriver : MonoBehaviour {
         var pi = new PlayerInput();
 
         // input get key down is bad but it's quick to implement and test
-        if (Input.GetKey(KeyCode.A)) pi.horizontal -= 0.5f; // was originally 1f
-        if (Input.GetKey(KeyCode.D)) pi.horizontal += 0.5f; // was originally 1f
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 0.3f; 
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 0.3f; 
 
         return pi;
     }
