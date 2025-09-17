@@ -19,5 +19,6 @@ public class CameraFollow : MonoBehaviour {
         var pos = player.transform.position;
         pos.z = cachedTransform.position.z;
         cachedTransform.position = pos;
+
     }
 }
