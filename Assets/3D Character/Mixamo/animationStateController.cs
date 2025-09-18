@@ -6,7 +6,7 @@ public class animationStateController : MonoBehaviour {
 
     public PlayerDriver playerDriver;
 
-    Animator animator;
+    public Animator animator;
     //int isRunningHash;
     int isFallingHash;
     //public float groundCheckDistance = 1f;
@@ -30,13 +30,13 @@ public class animationStateController : MonoBehaviour {
         // if player presses w key
         //if (!isRunning && forwardPressed)
         //{
-            // then set the isRunning boolean to be true
+        // then set the isRunning boolean to be true
         //    animator.SetBool(isRunningHash, true);
         //}
         // if player is not pressing w key
         //if (isRunning && !forwardPressed)
         //{
-            // then set the isRunning boolean to be false
+        // then set the isRunning boolean to be false
         //    animator.SetBool(isRunningHash, false);
         //}
         // add offset so ray starts at feet
@@ -55,6 +55,7 @@ public class animationStateController : MonoBehaviour {
             animator.SetBool(isFallingHash, true);
             animator.SetBool("isParachuting", false);
         }
+
     }
 
     /*
