@@ -22,11 +22,15 @@ public class BlockEffect : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnCollisionEnter(Collision other)
     {
+
+        Debug.Log("Collision detected with: " + other.transform.name);
+        Debug.Log($"{other.transform.gameObject.CompareTag("Player")} && {killPlayerOnContact}");
         // check if the colliding object is the player
-        if (other.CompareTag("Player") && killPlayerOnContact)
+        if (other.transform.gameObject.CompareTag("Player") && killPlayerOnContact)
         {
+          
             ApplyDeathEffect(other.gameObject);
             PlayImpactEffects();
         }
