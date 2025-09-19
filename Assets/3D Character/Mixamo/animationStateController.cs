@@ -25,7 +25,7 @@ public class animationStateController : MonoBehaviour {
     {
         //bool isRunning = animator.GetBool(isRunningHash);
         // bool forwardPressed = Input.GetKey("d");
-        bool parachutePressed = playerDriver.isSlowFalling;
+        var parachutePressed = playerDriver.isSlowFalling;
 
         // if player presses w key
         //if (!isRunning && forwardPressed)
@@ -43,6 +43,8 @@ public class animationStateController : MonoBehaviour {
         //Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
         //bool isGrounded = Physics.Raycast(rayOrigin, Vector3.down, groundCheckDistance, groundMask);
         //animator.SetBool(isFallingHash,!isGrounded);
+
+        Debug.Log(parachutePressed);
 
         //Parachuting logic
         if (parachutePressed)
