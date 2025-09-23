@@ -13,6 +13,8 @@ public class PlayerDriver : MonoBehaviour {
     public float horizontalAccelerationSpeed = 80f;
     public float verticalAccelerationSpeed = -9.8f;
 
+    public bool isDead;
+
     [Header("Parachuting")]
     public float parachuteSpeedscaler = 0.5f;
     public bool isSlowFalling = false;
@@ -147,7 +149,7 @@ public class PlayerDriver : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 1f; 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
-        pi.active = true;
+        pi.active = !isDead;
         pi.parachute = Input.GetKey(KeyCode.Space);
 
         return pi;

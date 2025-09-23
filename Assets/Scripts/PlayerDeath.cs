@@ -76,7 +76,7 @@ public class PlayerDeath : MonoBehaviour {
         // disable player control
         if (playerDriver != null)
         {
-            playerDriver.enabled = false;
+            playerDriver.isDead = true;
         }
 
         // play death animation
