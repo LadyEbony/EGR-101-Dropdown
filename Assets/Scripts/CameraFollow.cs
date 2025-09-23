@@ -16,8 +16,8 @@ public class CameraFollow : MonoBehaviour {
         var player = PlayerDriver.Instance;
         if (player == null) return;
 
-        var pos = player.transform.position;
-        pos.z = cachedTransform.position.z;
+        var pos = cachedTransform.position;
+        pos.y = player.transform.position.y;
         cachedTransform.position = pos;
 
     }
