@@ -18,15 +18,10 @@ public class PlayerDriver : MonoBehaviour {
     public bool isSlowFalling = false;
 
     [Header("Pushback")]
-    [Tooltip("The temporary speed forced on to the player for knockback")]
-    public float pushBackSpeed = 20f;
-    [Tooltip("The length that the knockback is applied to the player")]
-    public float pushBackControlTime = 1f;
-    [Tooltip("The player's controls are inactive during knockback. The controls are returned during these last seconds")]
-    public float pushBackControlReturnTime = 0.25f;
-
-    private Vector3 pushBackNormal; // temp variable
-    private float pushBackTime;     // temp variable
+    public GameObject pushbackPrefab;
+    public float pushbackInputDisableTime = 0.5f;
+    public float pushbackForceScaler = 1f;
+    private float pushbackInputDisableStartTime;
 
     //public Vector3 velocity;
 
@@ -53,18 +48,12 @@ public class PlayerDriver : MonoBehaviour {
 
         var velocity = rigidbody.velocity;
 
-        // is knockback active? if so, apply knockback
-        if (pushBackTime > 0f)
-        {
-            //var s = Mathf.SmoothStep(0f, pushBackControlTime, pushBackTime);
-            //velocity = pushBackNormal * pushBackSpeed * s * Time.fixedDeltaTime;
-
-            //Debug.Log($"{pushBackTime} + {pushBackNormal} -> {s}");
-        }
         // check if charaacter control is active
         if (input.active)
         {
-            velocity += new Vector3(input.horizontal * horizontalAccelerationSpeed, 0f) * Time.fixedDeltaTime;
+            var inputScaler = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
+            inputScaler = Mathf.Clamp01(inputScaler);
+            velocity += new Vector3(input.horizontal * horizontalAccelerationSpeed, 0f) * Time.fixedDeltaTime * inputScaler;
         }
 
         //pushBackTime = Mathf.MoveTowards(pushBackTime, 0f, Time.deltaTime);
@@ -74,27 +63,38 @@ public class PlayerDriver : MonoBehaviour {
         // terminal velocity
         var terminalVel = verticalSpeed;
         if (isSlowFalling) terminalVel *= parachuteSpeedscaler;
-        velocity.y = Mathf.Clamp(velocity.y, terminalVel, 0);
+        velocity.x = Mathf.Clamp(velocity.x, -horizontalSpeed, horizontalSpeed);
+        velocity.y = Mathf.Clamp(velocity.y, -terminalVel, verticalSpeed);
 
         rigidbody.velocity = velocity;
 
-        // this is the offset that we will move the player every frame
-        // we scale the offset by Time.deltaTime so the offset is consistent every frame
-        // X MOVE
-        //rigidbody.velocity = velocity;
-        //var offset = velocity * Time.fixedDeltaTime;
-        //rigidbody.MovePosition(rigidbody.position + offset);
     }
 
     public const int WALL_LAYER = 8;
 
     private void OnCollisionEnter(Collision collision)
     {
+        pushbackInputDisableStartTime = Time.time;
 
+        if (collision.contactCount > 0)
+        {
+            var c = collision.contacts[0];
+            var pos = c.point;
+            var rotation = Quaternion.LookRotation(c.normal);
+
+            // particles
+            var copy = Instantiate(pushbackPrefab, pos, rotation);
+            Destroy(copy, 5f);
+
+            // additional pushback
+            //Debug.Log(c.normal);
+            rigidbody.AddForce(c.normal * pushbackForceScaler, ForceMode.Impulse);
+        }
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        // FUNCTION IS NOW INVALID
         Debug.LogWarning(hit.moveDirection);
         Debug.LogWarning(hit.moveLength);
         if (hit.gameObject.CompareTag("Enemy") || hit.gameObject.CompareTag("EnemyProjectile"))
@@ -147,8 +147,7 @@ public class PlayerDriver : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 1f; 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
-        pi.active = pushBackTime < pushBackControlReturnTime;
-
+        pi.active = true;
         pi.parachute = Input.GetKey(KeyCode.Space);
 
         return pi;

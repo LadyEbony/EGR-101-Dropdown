@@ -837,15 +837,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 910988961}
-  horizontalSpeed: 5
-  verticalSpeed: -4
-  horizontalAccelerationSpeed: 40
-  verticalAccelerationSpeed: -4
+  horizontalSpeed: 8
+  verticalSpeed: 4
+  horizontalAccelerationSpeed: 64
+  verticalAccelerationSpeed: -6
   parachuteSpeedscaler: 0.5
   isSlowFalling: 0
-  pushBackSpeed: 40
-  pushBackControlTime: 1
-  pushBackControlReturnTime: 0.25
+  pushbackPrefab: {fileID: 3775148760856075127, guid: 44ccf429c5c4ea44e815dc5f26639b8f,
+    type: 3}
+  pushbackInputDisableTime: 0.5
+  pushbackForceScaler: 10
   health: 3
   invincibilityTime: 1
 --- !u!54 &910988961
