@@ -126,7 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    Event: 600
+    Event: 550
     Material: {fileID: 2100000, guid: 72c3824b56debcc4bb6d6ca128b7e564, type: 2}
     KernelSize: 8
     N: 8
