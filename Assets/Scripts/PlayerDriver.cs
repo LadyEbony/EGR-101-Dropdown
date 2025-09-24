@@ -44,6 +44,15 @@ public class PlayerDriver : MonoBehaviour {
         input = GetInput();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            // coin will handle its own collection logic
+            // we can add player specific effects here if needed
+        }
+    }
+
     private void FixedUpdate()
     {
         isSlowFalling = input.parachute;
@@ -156,3 +165,5 @@ public class PlayerDriver : MonoBehaviour {
     }
 
 }
+
+
