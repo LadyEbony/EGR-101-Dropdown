@@ -76,7 +76,7 @@ public class PlayerDeath : MonoBehaviour {
         // disable player control
         if (playerDriver != null)
         {
-            playerDriver.enabled = false;
+            playerDriver.isDead = true;
         }
 
         // play death animation
@@ -125,7 +125,7 @@ public class PlayerDeath : MonoBehaviour {
         }
         */
 
-        StartCoroutine(ShowGameOverAfterDelay());
+        HandleGameOver();
     }
 
     private void HandleDeathEffects()
@@ -211,6 +211,18 @@ public class PlayerDeath : MonoBehaviour {
         {
             trailParticles.Play();
         }
+    }
+
+    private void HandleGameOver()
+    {
+        // save score when player dies
+        if (Score.Instance != null)
+        {
+            Score.Instance.SaveScore();
+        }
+
+        // game over UI after delay
+        StartCoroutine(ShowGameOverAfterDelay());
     }
 
     // maybe implement this later
