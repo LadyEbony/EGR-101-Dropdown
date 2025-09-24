@@ -841,9 +841,10 @@ MonoBehaviour:
   rigidbody: {fileID: 910988961}
   animatorState: {fileID: 1434500817}
   horizontalSpeed: 8
-  verticalSpeed: 5.5
-  horizontalAccelerationSpeed: 64
+  verticalSpeed: 4.5
+  horizontalAccelerationSpeed: 32
   verticalAccelerationSpeed: -6
+  isDead: 0
   parachuteSpeedscaler: 0.5
   isSlowFalling: 0
   pushbackPrefab: {fileID: 3775148760856075127, guid: 44ccf429c5c4ea44e815dc5f26639b8f,
