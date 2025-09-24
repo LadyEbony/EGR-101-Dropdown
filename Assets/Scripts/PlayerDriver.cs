@@ -7,6 +7,7 @@ public class PlayerDriver : MonoBehaviour {
 
     public static PlayerDriver Instance { get; private set; }
     public new Rigidbody rigidbody;
+    public animationStateController animatorState;
 
     public float horizontalSpeed = 10f;
     public float verticalSpeed = -10f;
@@ -40,6 +41,13 @@ public class PlayerDriver : MonoBehaviour {
     void Update()
     {
         input = GetInput();
+        if (input.shoot)
+        {
+            animatorState.animator.SetTrigger("IsShooting");
+            Debug.Log("shoot");
+            // shoot logic
+
+        }
     }
 
     private void FixedUpdate()
@@ -135,7 +143,7 @@ public class PlayerDriver : MonoBehaviour {
     {
         public bool active;
         public float horizontal;
-
+        public bool shoot;
         public bool parachute;
     }
 
@@ -148,7 +156,9 @@ public class PlayerDriver : MonoBehaviour {
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
         pi.active = true;
-        pi.parachute = Input.GetKey(KeyCode.Space);
+        pi.parachute = Input.GetKey(KeyCode.W);
+        pi.shoot = Input.GetKeyDown(KeyCode.S);
+
 
         return pi;
     }

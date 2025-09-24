@@ -376,6 +376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bddeaf023707d34d9f8b70329baf909, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  yOffset: -4
 --- !u!1 &337190048
 GameObject:
   m_ObjectHideFlags: 0
@@ -838,8 +839,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 910988961}
+  animatorState: {fileID: 1434500817}
   horizontalSpeed: 8
-  verticalSpeed: 4
+  verticalSpeed: 5.5
   horizontalAccelerationSpeed: 64
   verticalAccelerationSpeed: -6
   parachuteSpeedscaler: 0.5
@@ -1038,47 +1040,47 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.009356511
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.2
+      value: -1.1999512
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.0045342026
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.65445316
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.0013279149
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.75609994
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.0015341535
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 0.233
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 98.243
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 88b14213e1f782445b002627346fc930,
         type: 3}
@@ -1909,6 +1911,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDriver: {fileID: 910988959}
   animator: {fileID: 1434500818}
+  groundCheckDistance: 1
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!95 &1434500818
 Animator:
   serializedVersion: 7
