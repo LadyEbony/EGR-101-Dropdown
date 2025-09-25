@@ -47,12 +47,12 @@ public class PlayerDriver : MonoBehaviour {
         isSlowFalling = input.parachute;
 
         var velocity = rigidbody.velocity;
-
+        var disableLerp = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
+        var maxVelocityScaler = 1f + (1f - disableLerp) * 4f;
         // check if charaacter control is active
         if (input.active)
         {
-            var inputScaler = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
-            inputScaler = Mathf.Clamp01(inputScaler);
+            var inputScaler = Mathf.Clamp01(disableLerp);
             velocity += new Vector3(input.horizontal * horizontalAccelerationSpeed, 0f) * Time.fixedDeltaTime * inputScaler;
         }
 
@@ -63,8 +63,8 @@ public class PlayerDriver : MonoBehaviour {
         // terminal velocity
         var terminalVel = verticalSpeed;
         if (isSlowFalling) terminalVel *= parachuteSpeedscaler;
-        velocity.x = Mathf.Clamp(velocity.x, -horizontalSpeed, horizontalSpeed);
-        velocity.y = Mathf.Clamp(velocity.y, -terminalVel, verticalSpeed);
+        velocity.x = Mathf.Clamp(velocity.x, -horizontalSpeed * maxVelocityScaler, horizontalSpeed * maxVelocityScaler);
+        velocity.y = Mathf.Clamp(velocity.y, -terminalVel, verticalSpeed * maxVelocityScaler);
 
         rigidbody.velocity = velocity;
 

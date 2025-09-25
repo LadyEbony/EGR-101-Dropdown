@@ -44,8 +44,6 @@ public class animationStateController : MonoBehaviour {
         //bool isGrounded = Physics.Raycast(rayOrigin, Vector3.down, groundCheckDistance, groundMask);
         //animator.SetBool(isFallingHash,!isGrounded);
 
-        Debug.Log(parachutePressed);
-
         //Parachuting logic
         if (parachutePressed)
         {

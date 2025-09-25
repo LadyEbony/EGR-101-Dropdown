@@ -388,6 +388,7 @@ GameObject:
   - component: {fileID: 337190051}
   - component: {fileID: 337190050}
   - component: {fileID: 337190049}
+  - component: {fileID: 337190053}
   m_Layer: 8
   m_Name: Sphere
   m_TagString: Untagged
@@ -483,6 +484,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &337190053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 337190048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b6a69cc6516d0a4eaa3baa63cc4f641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  extraBounceForce: 5
+  bounceReactTime: 1
+  meshRenderer: {fileID: 337190050}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2211,8 +2227,6 @@ GameObject:
   - component: {fileID: 1532101962}
   - component: {fileID: 1532101961}
   - component: {fileID: 1532101965}
-  - component: {fileID: 1532101967}
-  - component: {fileID: 1532101966}
   m_Layer: 8
   m_Name: DeadlyBlock
   m_TagString: Untagged
@@ -2309,36 +2323,6 @@ Transform:
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1532101965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1532101960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92975fa2b02266147916255e34bb19a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killPlayerOnContact: 1
-  impactParticles: {fileID: 0}
-  hitMaterial: {fileID: 0}
---- !u!114 &1532101966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1532101960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92975fa2b02266147916255e34bb19a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  killPlayerOnContact: 1
-  impactParticles: {fileID: 0}
-  hitMaterial: {fileID: 0}
---- !u!114 &1532101967
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
