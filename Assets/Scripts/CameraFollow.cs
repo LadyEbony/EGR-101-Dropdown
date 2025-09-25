@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour {
 
     private Transform cachedTransform;
+    public float yOffset = 10;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class CameraFollow : MonoBehaviour {
         if (player == null) return;
 
         var pos = cachedTransform.position;
-        pos.y = player.transform.position.y;
+        pos.y = player.transform.position.y + yOffset;
         cachedTransform.position = pos;
 
     }

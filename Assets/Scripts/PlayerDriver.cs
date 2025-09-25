@@ -7,11 +7,14 @@ public class PlayerDriver : MonoBehaviour {
 
     public static PlayerDriver Instance { get; private set; }
     public new Rigidbody rigidbody;
+    public animationStateController animatorState;
 
     public float horizontalSpeed = 10f;
     public float verticalSpeed = -10f;
     public float horizontalAccelerationSpeed = 80f;
     public float verticalAccelerationSpeed = -9.8f;
+
+    public bool isDead;
 
     [Header("Parachuting")]
     public float parachuteSpeedscaler = 0.5f;
@@ -40,6 +43,23 @@ public class PlayerDriver : MonoBehaviour {
     void Update()
     {
         input = GetInput();
+        if (input.shoot)
+        {
+            animatorState.animator.SetTrigger("IsShooting");
+            Debug.Log("shoot");
+            // shoot logic
+
+
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin"))
+        {
+            // coin will handle its own collection logic
+            // we can add player specific effects here if needed
+        }
     }
 
     private void FixedUpdate()
@@ -135,7 +155,7 @@ public class PlayerDriver : MonoBehaviour {
     {
         public bool active;
         public float horizontal;
-
+        public bool shoot;
         public bool parachute;
     }
 
@@ -147,10 +167,13 @@ public class PlayerDriver : MonoBehaviour {
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 1f; 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
-        pi.active = true;
-        pi.parachute = Input.GetKey(KeyCode.Space);
+        pi.active = !isDead;
+        pi.parachute = Input.GetKey(KeyCode.W);
+        pi.shoot = Input.GetKeyDown(KeyCode.S);
 
         return pi;
     }
 
 }
+
+
