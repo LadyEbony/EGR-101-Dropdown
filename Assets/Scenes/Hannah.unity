@@ -861,12 +861,14 @@ MonoBehaviour:
   horizontalAccelerationSpeed: 32
   verticalAccelerationSpeed: -6
   isDead: 0
+  limiterBypassDuration: 0
   parachuteSpeedscaler: 0.5
   isSlowFalling: 0
   pushbackPrefab: {fileID: 3775148760856075127, guid: 44ccf429c5c4ea44e815dc5f26639b8f,
     type: 3}
   pushbackInputDisableTime: 0.5
   pushbackForceScaler: 10
+  shootTimeDelay: 0.5
   health: 3
   invincibilityTime: 1
 --- !u!54 &910988961
