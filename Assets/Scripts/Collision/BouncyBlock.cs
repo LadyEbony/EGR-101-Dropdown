@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BouncyBlock : CollisionBlock
 {
+    public GameObject bouncePrefab;
     public float extraBounceForce = 1f;
     public float bounceReactTime = 1f;
     public MeshRenderer meshRenderer;
@@ -29,7 +30,12 @@ public class BouncyBlock : CollisionBlock
 
     public override void OnCollisionEnterPlayer(PlayerDriver player, ContactPoint cp)
     {
-        player.rigidbody.AddForce(-cp.normal *  extraBounceForce, ForceMode.Impulse);
+        var project = Vector3.ProjectOnPlane(-cp.normal, Vector3.forward);
+
+        player.rigidbody.AddForce(project *  extraBounceForce, ForceMode.Impulse);
         lastBounceTime = Time.time;
+
+        var copy = Instantiate(bouncePrefab, cp.point, Quaternion.LookRotation(project));
+        Destroy(copy, 5f);
     }
 }
