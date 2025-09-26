@@ -49,7 +49,9 @@ public class PlayerDriver : MonoBehaviour {
             Debug.Log("shoot");
             // shoot logic
 
-
+            var v = rigidbody.velocity;
+            v.y = 10f;
+            rigidbody.velocity = v;
         }
     }
 
@@ -100,7 +102,9 @@ public class PlayerDriver : MonoBehaviour {
         {
             var c = collision.contacts[0];
             var pos = c.point;
-            var rotation = Quaternion.LookRotation(c.normal);
+
+            var project = Vector3.ProjectOnPlane(c.normal, Vector3.forward);
+            var rotation = Quaternion.LookRotation(project);
 
             // particles
             var copy = Instantiate(pushbackPrefab, pos, rotation);

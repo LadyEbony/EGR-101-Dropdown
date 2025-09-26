@@ -497,6 +497,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6a69cc6516d0a4eaa3baa63cc4f641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 4032588934294058992, guid: c5d4aad703bb1844cb539cf8c231c107,
+    type: 3}
   extraBounceForce: 5
   bounceReactTime: 1
   meshRenderer: {fileID: 337190050}
