@@ -67,7 +67,7 @@ public class Coin : MonoBehaviour
         }
 
         // disable visual components
-        GetComponent<Renderer>().enabled = false;
+        GetComponentInChildren<Renderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
 
         // after effects finish
