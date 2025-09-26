@@ -856,8 +856,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 910988961}
   animatorState: {fileID: 1434500817}
+  projectile: {fileID: 2442679477611320926, guid: d881caacaa177854ca2b1e86c8c59064,
+    type: 3}
   horizontalSpeed: 8
-  verticalSpeed: 4.5
+  verticalSpeed: 5
   horizontalAccelerationSpeed: 32
   verticalAccelerationSpeed: -6
   isDead: 0

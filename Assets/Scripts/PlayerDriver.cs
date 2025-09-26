@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Unity.Burst.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerDriver : MonoBehaviour {
@@ -8,6 +10,7 @@ public class PlayerDriver : MonoBehaviour {
     public static PlayerDriver Instance { get; private set; }
     public new Rigidbody rigidbody;
     public animationStateController animatorState;
+    public GameObject projectile;
 
     public float horizontalSpeed = 10f;
     public float verticalSpeed = -10f;
@@ -31,7 +34,7 @@ public class PlayerDriver : MonoBehaviour {
     private float pushbackInputDisableStartTime;
 
     [Header("ShootTimeDelay")]
-    public float shootTimeDelay = 1f;
+    public float shootTimeDelay = 10f;
     private float shootStartTime;
 
     //public Vector3 velocity;
@@ -69,6 +72,8 @@ public class PlayerDriver : MonoBehaviour {
 
             limiterBypassStartTime = Time.time;
             limiterBypassDuration = 1.5f;
+            Instantiate(projectile, transform.position, Quaternion.identity);
+
         }
     }
 
