@@ -16,6 +16,10 @@ public class PlayerDriver : MonoBehaviour {
 
     public bool isDead;
 
+    [Header("Temporary Bypass Limiters")]
+    public float limiterBypassDuration = 0.5f;
+    private float limiterBypassStartTime;
+    
     [Header("Parachuting")]
     public float parachuteSpeedscaler = 0.5f;
     public bool isSlowFalling = false;
@@ -26,15 +30,24 @@ public class PlayerDriver : MonoBehaviour {
     public float pushbackForceScaler = 1f;
     private float pushbackInputDisableStartTime;
 
+    [Header("ShootTimeDelay")]
+    public float shootTimeDelay = 1f;
+    private float shootStartTime;
+
     //public Vector3 velocity;
 
     // collision variables for enemies and projectiles
+    [Header("Health")]
     public int health = 3;
     public float invincibilityTime = 1f;
     private float invincibleUntil = 0f;
 
     private void Awake() {
         Instance = this;
+
+        shootStartTime = Time.time;
+        limiterBypassStartTime = Time.time;
+        pushbackInputDisableStartTime = Time.time;
     }
 
     PlayerInput input;
@@ -48,10 +61,14 @@ public class PlayerDriver : MonoBehaviour {
             animatorState.animator.SetTrigger("IsShooting");
             Debug.Log("shoot");
             // shoot logic
-
             var v = rigidbody.velocity;
             v.y = 10f;
             rigidbody.velocity = v;
+
+            shootStartTime = Time.time;
+
+            limiterBypassStartTime = Time.time;
+            limiterBypassDuration = 1.5f;
         }
     }
 
@@ -71,6 +88,12 @@ public class PlayerDriver : MonoBehaviour {
         var velocity = rigidbody.velocity;
         var disableLerp = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
         var maxVelocityScaler = 1f + (1f - disableLerp) * 4f;
+
+        var bypassLerp = Mathf.InverseLerp(0f, limiterBypassDuration, Time.time - limiterBypassStartTime);
+        var maxBypassScaler = 1f + (1f - bypassLerp) * 4f;
+
+        maxVelocityScaler *= maxBypassScaler;
+
         // check if charaacter control is active
         if (input.active)
         {
@@ -102,9 +125,7 @@ public class PlayerDriver : MonoBehaviour {
         {
             var c = collision.contacts[0];
             var pos = c.point;
-
-            var project = Vector3.ProjectOnPlane(c.normal, Vector3.forward);
-            var rotation = Quaternion.LookRotation(project);
+            var rotation = Quaternion.LookRotation(c.normal);
 
             // particles
             var copy = Instantiate(pushbackPrefab, pos, rotation);
@@ -173,7 +194,11 @@ public class PlayerDriver : MonoBehaviour {
 
         pi.active = !isDead;
         pi.parachute = Input.GetKey(KeyCode.W);
-        pi.shoot = Input.GetKeyDown(KeyCode.S);
+
+        var shootDelay = Mathf.InverseLerp(0f, shootTimeDelay, Time.time - shootStartTime);
+        pi.shoot = Input.GetKeyDown(KeyCode.S) && shootDelay >= 1f;
+        
+        
 
         return pi;
     }
