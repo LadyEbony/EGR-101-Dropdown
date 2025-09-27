@@ -5,7 +5,8 @@ using Unity.Burst.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerDriver : MonoBehaviour {
+public class PlayerDriver : MonoBehaviour
+{
 
     public static PlayerDriver Instance { get; private set; }
     public new Rigidbody rigidbody;
@@ -22,7 +23,7 @@ public class PlayerDriver : MonoBehaviour {
     [Header("Temporary Bypass Limiters")]
     public float limiterBypassDuration = 0.5f;
     private float limiterBypassStartTime;
-    
+
     [Header("Parachuting")]
     public float parachuteSpeedscaler = 0.5f;
     public bool isSlowFalling = false;
@@ -45,7 +46,8 @@ public class PlayerDriver : MonoBehaviour {
     public float invincibilityTime = 1f;
     private float invincibleUntil = 0f;
 
-    private void Awake() {
+    private void Awake()
+    {
         Instance = this;
 
         shootStartTime = Time.time;
@@ -162,8 +164,8 @@ public class PlayerDriver : MonoBehaviour {
 
         void TakeDamage()
         {
-        if (Time.time < invincibleUntil) return;
-            health --;
+            if (Time.time < invincibleUntil) return;
+            health--;
             invincibleUntil = Time.time + invincibilityTime;
 
             // visual effects for taking damage can be added here
@@ -194,7 +196,7 @@ public class PlayerDriver : MonoBehaviour {
         var pi = new PlayerInput();
 
         // input get key down is bad but it's quick to implement and test
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 1f; 
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) pi.horizontal -= 1f;
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
         pi.active = !isDead;
@@ -202,12 +204,10 @@ public class PlayerDriver : MonoBehaviour {
 
         var shootDelay = Mathf.InverseLerp(0f, shootTimeDelay, Time.time - shootStartTime);
         pi.shoot = Input.GetKeyDown(KeyCode.S) && shootDelay >= 1f;
-        
-        
+
+
 
         return pi;
     }
 
 }
-
-
