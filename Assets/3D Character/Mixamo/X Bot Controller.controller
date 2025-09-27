@@ -68,9 +68,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.8333334
+  m_TransitionDuration: 0.62248343
+  m_TransitionOffset: 0.044617306
+  m_ExitTime: 0.43480647
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -139,9 +139,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9468085
+  m_TransitionDuration: 0.5062089
+  m_TransitionOffset: 0.05551191
+  m_ExitTime: 0.892296
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
@@ -155,7 +155,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Backflip
-  m_Speed: 1.5
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -4941435770737408994}
@@ -191,9 +191,9 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.18647671
-  m_TransitionOffset: 0
-  m_ExitTime: 0.9444445
+  m_TransitionDuration: 0.2505288
+  m_TransitionOffset: 0.0034070017
+  m_ExitTime: 0.86117655
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
