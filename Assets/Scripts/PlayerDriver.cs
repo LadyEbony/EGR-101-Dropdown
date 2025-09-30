@@ -144,44 +144,6 @@ public class PlayerDriver : MonoBehaviour
         }
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        // FUNCTION IS NOW INVALID
-        Debug.LogWarning(hit.moveDirection);
-        Debug.LogWarning(hit.moveLength);
-        if (hit.gameObject.CompareTag("Enemy") || hit.gameObject.CompareTag("EnemyProjectile"))
-        {
-            TakeDamage();
-            if (hit.gameObject.CompareTag("EnemyProjectile"))
-            {
-                Destroy(hit.gameObject);
-            }
-        }
-        else if (hit.gameObject.CompareTag("Vine"))
-        {
-            verticalSpeed = Mathf.Max(verticalSpeed, -3f);
-        }
-
-        void TakeDamage()
-        {
-            if (Time.time < invincibleUntil) return;
-            health--;
-            invincibleUntil = Time.time + invincibilityTime;
-
-            // visual effects for taking damage can be added here
-
-            if (health <= 0)
-            {
-                Die();
-            }
-        }
-
-        void Die()
-        {
-            Debug.Log("Player died");
-        }
-    }
-
     // we can extend this struct to whatever input we need to register
     struct PlayerInput
     {
@@ -205,9 +167,21 @@ public class PlayerDriver : MonoBehaviour
         var shootDelay = Mathf.InverseLerp(0f, shootTimeDelay, Time.time - shootStartTime);
         pi.shoot = Input.GetKeyDown(KeyCode.S) && shootDelay >= 1f;
 
-
-
         return pi;
+    }
+
+    public void Damage()
+    {
+        health -= 1;
+        if (health <= 0)
+        {
+            Kill();
+        }
+    }
+
+    public void Kill()
+    {
+        isDead = true;
     }
 
 }

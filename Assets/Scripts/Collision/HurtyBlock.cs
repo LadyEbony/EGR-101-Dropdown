@@ -2,16 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class HurtyBlock : CollisionBlock {
-    // Start is called before the first frame update
-    void Start()
+public class HurtyBlock : CollisionBlock {
+    public override void OnCollisionEnterPlayer(PlayerDriver player, ContactPoint cp)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        player.Damage();
     }
 }
