@@ -162,10 +162,10 @@ public class PlayerDriver : MonoBehaviour
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) pi.horizontal += 1f;
 
         pi.active = !isDead;
-        pi.parachute = Input.GetKey(KeyCode.W);
+        pi.parachute = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
 
         var shootDelay = Mathf.InverseLerp(0f, shootTimeDelay, Time.time - shootStartTime);
-        pi.shoot = Input.GetKeyDown(KeyCode.S) && shootDelay >= 1f;
+        pi.shoot = Input.GetKeyDown(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) && shootDelay >= 1f;
 
         return pi;
     }
