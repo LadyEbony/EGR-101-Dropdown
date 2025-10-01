@@ -3233,7 +3233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 12, y: 0, z: 0}
   length: 1
-  speed: 1
+  speed: 0.7
 --- !u!114 &1844289612
 MonoBehaviour:
   m_ObjectHideFlags: 0
