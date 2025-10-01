@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: -7287649104126053682}
   LaunchForce: 5
+  destroyAfterSeconds: 5
 --- !u!33 &-1752740335966213930
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 4075cdc34f35b8744b56149c0eb9895d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
