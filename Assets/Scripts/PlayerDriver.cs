@@ -108,7 +108,7 @@ public class PlayerDriver : MonoBehaviour
         } else {
             if (isSlowFalling) { // parachute stopped early
                 isSlowFalling = false;
-                parachuteCooldownEndTime = Time.time + 10f; 
+                parachuteCooldownEndTime = Time.time + 6f; 
             }
         }
 
