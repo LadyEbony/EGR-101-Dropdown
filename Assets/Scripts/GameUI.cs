@@ -5,9 +5,10 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;  
 
-public class GameUI : MonoBehaviour {
-
+public class GameUI : MonoBehaviour
+{
     public Volume volume;
     private Vignette vigenette;
 
@@ -18,9 +19,16 @@ public class GameUI : MonoBehaviour {
     public Graphic[] deathGraphics;
     private bool playedDeathAnimation;
 
+    [Header("Score")]
+    public Text scoreText;    
+   
+    private int score = 0;
+
     private void Awake()
     {
         volume.profile.TryGet(out vigenette);
+
+        UpdateScoreUI();
     }
 
     private void LateUpdate()
@@ -44,22 +52,36 @@ public class GameUI : MonoBehaviour {
         var parentTransform = healthPrefab.transform.parent;
         var count = parentTransform.childCount - 1;
 
-        // health less than gameobject count
-        // remove children
         if (health < count)
         {
             Destroy(parentTransform.GetChild(1).gameObject);
         }
 
-        // gameobject count less than health
-        // add children
         if (health > count)
         {
             var copy = Instantiate(healthPrefab, parentTransform);
             copy.SetActive(true);
-        }        
+        }
     }
 
+    public void AddScore(int amount)
+    {
+        score += amount;
+        UpdateScoreUI();
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateScoreUI();
+    }
+
+    void UpdateScoreUI()
+    {
+        if (scoreText != null)
+            scoreText.text = "Score: " + score;
+    }
+   
     void SetAlpha(Graphic g, float alpha)
     {
         var c = g.color;
@@ -72,8 +94,7 @@ public class GameUI : MonoBehaviour {
         var t = 0f;
         var vb = vigenette.intensity.value;
 
-
-        while(t < 2f)
+        while (t < 2f)
         {
             t += Time.deltaTime;
             var lerp = t / 2f;
@@ -87,6 +108,5 @@ public class GameUI : MonoBehaviour {
         yield return new WaitForSeconds(1f);
 
         SceneManager.LoadScene(0);
-
     }
 }
