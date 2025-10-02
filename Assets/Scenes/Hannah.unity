@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd8eaafaa7f76841b99f6d3dd944180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 0}
 --- !u!65 &33301076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1852,6 +1853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd8eaafaa7f76841b99f6d3dd944180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 0}
 --- !u!65 &767090083
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2679,6 +2681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd8eaafaa7f76841b99f6d3dd944180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 0}
 --- !u!65 &1412134581
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3974,6 +3977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd8eaafaa7f76841b99f6d3dd944180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 0}
 --- !u!65 &1496032724
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4061,7 +4065,7 @@ GameObject:
   - component: {fileID: 1532101961}
   - component: {fileID: 1532101965}
   m_Layer: 8
-  m_Name: Hurty Block
+  m_Name: Lava Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4110,7 +4114,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4075cdc34f35b8744b56149c0eb9895d, type: 2}
+  - {fileID: 2100000, guid: 40bde6ac9f9970548bf20bb0615ef5e6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4167,6 +4171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbd8eaafaa7f76841b99f6d3dd944180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bouncePrefab: {fileID: 4032588934294058992, guid: 7f80645e9cc8db744a41c66b90ef81ce,
+    type: 3}
 --- !u!1 &1683630021
 GameObject:
   m_ObjectHideFlags: 0
