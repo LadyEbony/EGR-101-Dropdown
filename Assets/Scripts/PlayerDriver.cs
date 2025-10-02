@@ -29,7 +29,7 @@ public class PlayerDriver : MonoBehaviour
     public bool isSlowFalling = false;
     public float parachuteStartTime;
     public float parachuteCooldownEndTime;
-    public float timeLimitForParachuteUse = 5f; // seconds
+    public float timeLimitForParachuteUse = 4.5f; // seconds
     public float timeBeforeParachuteNextUse = 8f; // seconds
 
     [Header("Pushback")]
