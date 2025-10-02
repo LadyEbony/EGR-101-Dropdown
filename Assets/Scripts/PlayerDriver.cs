@@ -27,6 +27,10 @@ public class PlayerDriver : MonoBehaviour
     [Header("Parachuting")]
     public float parachuteSpeedscaler = 0.5f;
     public bool isSlowFalling = false;
+    public float parachuteStartTime;
+    public float parachuteCooldownEndTime;
+    public float timeLimitForParachuteUse = 5f; // seconds
+    public float timeBeforeParachuteNextUse = 8f; // seconds
 
     [Header("Pushback")]
     public GameObject pushbackPrefab;
@@ -90,7 +94,27 @@ public class PlayerDriver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isSlowFalling = input.parachute;
+        if (input.parachute && Time.time >= parachuteCooldownEndTime) {
+
+            if (!isSlowFalling) // just started parachuting
+            {
+                parachuteStartTime = Time.time;
+                isSlowFalling = true;
+            }
+
+            // check if we've exceeded 3 seconds
+            if (Time.time - parachuteStartTime > timeLimitForParachuteUse)
+            {
+                isSlowFalling = false;
+                parachuteCooldownEndTime = Time.time + timeBeforeParachuteNextUse; // start cooldown
+            }
+        } else {
+            if (isSlowFalling) // parachute stopped early
+            {
+                isSlowFalling = false;
+                parachuteCooldownEndTime = Time.time + 10f; 
+            }
+        }
 
         var velocity = rigidbody.velocity;
         var disableLerp = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
