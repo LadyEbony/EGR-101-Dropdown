@@ -95,22 +95,18 @@ public class PlayerDriver : MonoBehaviour
     private void FixedUpdate()
     {
         if (input.parachute && Time.time >= parachuteCooldownEndTime) {
-
-            if (!isSlowFalling) // just started parachuting
-            {
+            if (!isSlowFalling) {// just started parachuting
                 parachuteStartTime = Time.time;
                 isSlowFalling = true;
             }
 
             // check if we've exceeded 3 seconds
-            if (Time.time - parachuteStartTime > timeLimitForParachuteUse)
-            {
+            if (Time.time - parachuteStartTime > timeLimitForParachuteUse){
                 isSlowFalling = false;
                 parachuteCooldownEndTime = Time.time + timeBeforeParachuteNextUse; // start cooldown
             }
         } else {
-            if (isSlowFalling) // parachute stopped early
-            {
+            if (isSlowFalling) { // parachute stopped early
                 isSlowFalling = false;
                 parachuteCooldownEndTime = Time.time + 10f; 
             }
