@@ -11,6 +11,8 @@ public class animationStateController : MonoBehaviour
     public float groundCheckDistance = 1f;
     public LayerMask groundMask;
 
+    public GameObject shieldMagicGameObject;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,7 @@ public class animationStateController : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
 
         animator.SetBool("isParachuting", playerDriver.isSlowFalling);
+        shieldMagicGameObject.SetActive(playerDriver.isSlowFalling);
     }
 
     /*
