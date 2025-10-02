@@ -11,6 +11,7 @@ public class animationStateController : MonoBehaviour
     public float groundCheckDistance = 1f;
     public LayerMask groundMask;
 
+    private Coroutine shieldCoroutine;
     public GameObject shieldMagicGameObject;
 
     // Start is called before the first frame update
@@ -19,6 +20,8 @@ public class animationStateController : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+
+
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +29,33 @@ public class animationStateController : MonoBehaviour
         Vector3 rayOrigin = transform.position + Vector3.up * 0.1f;
 
         animator.SetBool("isParachuting", playerDriver.isSlowFalling);
-        shieldMagicGameObject.SetActive(playerDriver.isSlowFalling);
+
+        if (playerDriver.isSlowFalling)
+        {
+            if (shieldCoroutine == null)
+            {
+                shieldCoroutine = StartCoroutine(ParactureEnum());
+            }
+        } else
+        {
+            if (shieldCoroutine != null)
+            {
+                StopCoroutine(shieldCoroutine);
+                shieldCoroutine = null;
+                shieldMagicGameObject.SetActive(false);
+            }
+        }
+
+        
+        //shieldMagicGameObject.SetActive(playerDriver.isSlowFalling);
+    }
+
+    IEnumerator ParactureEnum()
+    {
+        yield return new WaitForSeconds(0.2f);
+        shieldMagicGameObject.SetActive(true);
+
+        while (true) yield return null;
     }
 
     /*
