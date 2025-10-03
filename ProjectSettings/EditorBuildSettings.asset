@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Hannah.unity
+    path: Assets/Scenes/Hannah_Cursed.unity
     guid: efb4a7a238cb52b49ba1dd7a9f919e05
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
