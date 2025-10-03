@@ -97,8 +97,8 @@ public class PlayerDriver : MonoBehaviour
         if (remainingCooldown > timeBeforeParachuteNextUse / 2f) {
             parachuteCooldownImage.color = Color.red;
         } else if (remainingCooldown > 0f) {
-            parachuteCooldownImage.color = Color.orange;
-        } else {
+            parachuteCooldownImage.color = Color.yellow;
+        } else { // TODO: this never happens
             parachuteCooldownImage.color = Color.blue;
         }
     }
