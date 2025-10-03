@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HurtyTriggerDoesntDisappear : TriggerItem {
 
+    public AudioSource audioSource;
     public bool disabled;
 
     public override void OnTriggerEnterPlayer(PlayerDriver player)
@@ -12,5 +13,7 @@ public class HurtyTriggerDoesntDisappear : TriggerItem {
 
         disabled = true;
         player.Damage();
+
+        audioSource.Play();
     }
 }
