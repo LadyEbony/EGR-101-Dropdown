@@ -2732,7 +2732,7 @@ MonoBehaviour:
     type: 3}
   pushbackInputDisableTime: 0.5
   pushbackForceScaler: 10
-  shootTimeDelay: 4.5
+  shootTimeDelay: 3.5
   health: 3
   invincibilityTime: 1
 --- !u!54 &910988961
