@@ -32,6 +32,8 @@ public class PlayerDriver : MonoBehaviour
     public float timeLimitForParachuteUse = 4.5f; // seconds
     public float timeBeforeParachuteNextUse = 8f; // seconds
 
+    public UnityEngine.UI.Image parachuteCooldownImage;
+
     [Header("Pushback")]
     public GameObject pushbackPrefab;
     public float pushbackInputDisableTime = 0.5f;
@@ -80,6 +82,24 @@ public class PlayerDriver : MonoBehaviour
             limiterBypassDuration = 1.5f;
             Instantiate(projectile, transform.position, Quaternion.identity);
 
+        }
+
+        /* // This way might work
+        parachuteCooldownImage.fillAmount = Mathf.Clamp01((parachuteCooldownEndTime - Time.time) / timeBeforeParachuteNextUse);
+        parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.white : Color.gray; */
+
+        // how much cooldown time is left (0 if ready)
+        float remainingCooldown = Mathf.Max(0f, parachuteCooldownEndTime - Time.time);
+
+        // fill amount (1 = fully cooling down, 0 = ready)
+        parachuteCooldownImage.fillAmount = remainingCooldown / timeBeforeParachuteNextUse;
+
+        if (remainingCooldown > timeBeforeParachuteNextUse / 2f) {
+            parachuteCooldownImage.color = Color.red;
+        } else if (remainingCooldown > 0f) {
+            parachuteCooldownImage.color = Color.orange;
+        } else {
+            parachuteCooldownImage.color = Color.blue;
         }
     }
 
@@ -139,7 +159,6 @@ public class PlayerDriver : MonoBehaviour
         velocity.y = Mathf.Clamp(velocity.y, -terminalVel, verticalSpeed * maxVelocityScaler);
 
         rigidbody.velocity = velocity;
-
     }
 
     public const int WALL_LAYER = 8;
