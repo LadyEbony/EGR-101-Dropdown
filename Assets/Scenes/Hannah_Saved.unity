@@ -2361,6 +2361,7 @@ MonoBehaviour:
   parachuteCooldownEndTime: 0
   timeLimitForParachuteUse: 5
   timeBeforeParachuteNextUse: 8
+  parachuteCooldownImage: {fileID: 0}
   pushbackPrefab: {fileID: 3775148760856075127, guid: 44ccf429c5c4ea44e815dc5f26639b8f,
     type: 3}
   pushbackInputDisableTime: 0.5
@@ -4385,10 +4386,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6b42e0c8e799ab244b33cc180bcfb6a7, type: 3}
-  m_Resource: {fileID: 8300000, guid: 6b42e0c8e799ab244b33cc180bcfb6a7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: d236dadc620b1bb40b8682a0cf250b43, type: 3}
+  m_Resource: {fileID: 8300000, guid: d236dadc620b1bb40b8682a0cf250b43, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.75
   m_Pitch: 1
   Loop: 1
   Mute: 0
