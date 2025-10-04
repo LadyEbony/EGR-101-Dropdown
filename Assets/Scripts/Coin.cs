@@ -13,6 +13,7 @@ public class Coin : MonoBehaviour
     [Header("Effects")]
     public ParticleSystem collectParticles;
     public AudioClip collectSound;
+    public AudioSource audioSource;
 
     private Vector3 startPosition;
     private bool isCollected = false;
@@ -41,6 +42,8 @@ public class Coin : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CollectCoin();
+
+            audioSource.Play();
         }
     }
 

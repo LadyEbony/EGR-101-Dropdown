@@ -85,9 +85,8 @@ public class PlayerDeath : MonoBehaviour {
             playerAnimator.SetTrigger(deathAnimationTrigger);
         }
 
-        // leaving this for ellie to implement
-        /*
-        if (deathSound != null)
+        
+        /*if (deathSound != null)
         {
             deathSound.Play();
         }
