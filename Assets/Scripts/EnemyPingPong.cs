@@ -10,7 +10,6 @@ public class EnemyPingPong : MonoBehaviour {
     
     [Header("Animation")]
     public float length = 1f;
-    public float speed = 1f;
 
     private void Start()
     {
@@ -20,7 +19,7 @@ public class EnemyPingPong : MonoBehaviour {
 
     private void Update()
     {
-        var pp = Mathf.PingPong(Time.time * speed, length);
+        var pp = Mathf.PingPong(Time.time, length);
         var lerp = Mathf.InverseLerp(0f, length, pp);
         transform.position = Vector3.Lerp(startPosition, destinationPosition, lerp);
     }

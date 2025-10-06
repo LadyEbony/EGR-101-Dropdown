@@ -52,6 +52,9 @@ public class PlayerDriver : MonoBehaviour
     public float invincibilityTime = 1f;
     private float invincibleUntil = 0f;
 
+    [Header("Audio Source")]
+    public AudioSource hurtAudioSource;
+
     private void Awake()
     {
         Instance = this;
@@ -216,6 +219,8 @@ public class PlayerDriver : MonoBehaviour
         {
             Kill();
         }
+
+        hurtAudioSource.PlayOneShot(hurtAudioSource.clip);
     }
 
     public void Kill()
