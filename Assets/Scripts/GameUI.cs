@@ -7,8 +7,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;  
 
-public class GameUI : MonoBehaviour
-{
+public class GameUI : MonoBehaviour {
+
+  public static GameUI Instance { get; private set; }
+
     public Volume volume;
     private Vignette vigenette;
 
@@ -20,15 +22,14 @@ public class GameUI : MonoBehaviour
     private bool playedDeathAnimation;
 
     [Header("Score")]
-    public Text scoreText;    
-   
-    private int score = 0;
+    public TextMeshProUGUI scoreText;    
+    public float score = 0;
+    public float prevScore = 0;
 
     private void Awake()
     {
+      Instance = this;
         volume.profile.TryGet(out vigenette);
-
-        UpdateScoreUI();
     }
 
     private void LateUpdate()
@@ -43,6 +44,8 @@ public class GameUI : MonoBehaviour
             playedDeathAnimation = true;
             StartCoroutine(DoDeathAnimation());
         }
+
+        UpdateScoreUI();
     }
 
     void UpdateHealthIcons(int health)
@@ -67,19 +70,23 @@ public class GameUI : MonoBehaviour
     public void AddScore(int amount)
     {
         score += amount;
-        UpdateScoreUI();
     }
 
     public void ResetScore()
     {
         score = 0;
-        UpdateScoreUI();
     }
 
-    void UpdateScoreUI()
-    {
-        if (scoreText != null)
-            scoreText.text = "Score: " + score;
+    void UpdateScoreUI() {
+      var updating = false;
+
+      if (Mathf.RoundToInt(prevScore) != Mathf.RoundToInt(score)) {
+        prevScore = Mathf.Lerp(prevScore, score, Time.deltaTime * 4f);
+        updating = true;
+      }
+
+      scoreText.text = string.Format("{0:000000}", Mathf.RoundToInt(prevScore));
+      scoreText.color = Color.Lerp(scoreText.color, updating ? Color.yellow : Color.white, Time.deltaTime * 4f);
     }
    
     void SetAlpha(Graphic g, float alpha)

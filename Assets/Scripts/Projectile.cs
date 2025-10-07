@@ -5,22 +5,20 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     //Get RigidBody Component
-    [SerializeField] private Rigidbody rb;
+    public Rigidbody rb;
 
-    [SerializeField] private float LaunchForce = 50f;
+    public float launchForce = 50f;
+    public float destroyAfterSeconds = 5f;
 
-    [SerializeField] private float destroyAfterSeconds = 5f;
-    // Start is called before the first frame update
     void Start()
     {
-        // Give a force to the projectile
-        rb.velocity = Vector3.down*LaunchForce;
-
+        Destroy(gameObject, destroyAfterSeconds);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        Destroy(gameObject, destroyAfterSeconds); 
-    }
+  private void FixedUpdate()
+  {
+    var v = Vector3.down * launchForce;
+    rb.MovePosition(rb.position + v * Time.fixedDeltaTime);
+  }
+
 }

@@ -23,4 +23,14 @@ public class ExplosionHurtyBlock : CollisionBlock {
     disabled = true;
     Destroy(gameObject);
   }
+
+  public override void OnColliderEnterProjectile(ContactPoint cp) {
+    if (disabled) return;
+
+    var copy = Instantiate(explosionPrefab, cp.point, Quaternion.identity);
+    Destroy(copy, 5f);
+
+    disabled = true;
+    Destroy(gameObject);
+  }
 }

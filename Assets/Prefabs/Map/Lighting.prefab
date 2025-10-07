@@ -57,7 +57,7 @@ MonoBehaviour:
   loopAudioSource: {fileID: 2560463483348239954}
   hitAudioSource: {fileID: 1732548885767730991}
   disabled: 0
-  disableTimer: 3
+  disableTimer: 6
   hurtPrefab: {fileID: 7536872492917427662, guid: 248277af7b9a9b640bb8bb1b8c3981d2,
     type: 3}
 --- !u!65 &9205600409545536706

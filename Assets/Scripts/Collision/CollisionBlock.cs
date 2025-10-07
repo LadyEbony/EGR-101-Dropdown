@@ -8,9 +8,18 @@ public abstract class CollisionBlock : MonoBehaviour {
         if (collision.gameObject && collision.contactCount > 0)
         {
             var script = collision.gameObject.GetComponent<PlayerDriver>();
-            if (script) OnCollisionEnterPlayer(script, collision.contacts[0]);
+            var cp = collision.contacts[0];
+            if (script) OnCollisionEnterPlayer(script, cp);
+
+            var script2 = collision.gameObject.GetComponent<Projectile>();
+            if (script2){
+              OnColliderEnterProjectile(cp);
+              Destroy(script2.gameObject);
+            }
         }
     }
 
     public abstract void OnCollisionEnterPlayer(PlayerDriver player, ContactPoint cp);
+
+    public virtual void OnColliderEnterProjectile(ContactPoint cp) { }
 }

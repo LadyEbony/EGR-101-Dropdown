@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Coin : MonoBehaviour
-{
+public class Coin : TriggerItem {
     [Header("Coin Settings")]
     public int coinValue = 1;
     public float rotationSpeed = 100f;
@@ -11,69 +10,36 @@ public class Coin : MonoBehaviour
     public float floatSpeed = 2f;
 
     [Header("Effects")]
-    public ParticleSystem collectParticles;
-    public AudioClip collectSound;
-    public AudioSource audioSource;
+    public GameObject collectPrefab;
 
-    private Vector3 startPosition;
     private bool isCollected = false;
 
-    void Start()
-    {
-        startPosition = transform.position;
+    void Update() {
+      // rotate the coin
+      transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+
+      // floating animation
+      float newY = Mathf.Sin(Time.time * floatSpeed) * floatHeight;
+      transform.localPosition = new Vector3(0f, newY, 0f);
     }
 
-    void Update()
-    {
-        if (isCollected) return;
+  public override void OnTriggerEnterPlayer(PlayerDriver player) {
+    if (isCollected) return;
 
-        // rotate the coin
-        transform.Rotate(0, rotationSpeed * Time.deltaTime, 0);
+    // add to score
+    GameUI.Instance.AddScore(coinValue);
 
-        // floating animation
-        float newY = startPosition.y + Mathf.Sin(Time.time * floatSpeed) * floatHeight;
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
-    }
+    // play effects
+    var copy = Instantiate(collectPrefab, transform.position, Quaternion.identity);
+    Destroy(copy, 2f);
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (isCollected) return;
+    // disable visual components
+    GetComponentInChildren<Renderer>().enabled = false;
+    GetComponent<Collider>().enabled = false;
 
-        if (other.CompareTag("Player"))
-        {
-            CollectCoin();
+    // after effects finish
+    Destroy(transform.parent.gameObject, 2f);
 
-            audioSource.Play();
-        }
-    }
-
-    void CollectCoin()
-    {
-        isCollected = true;
-
-        // add to score
-        if (Score.Instance != null)
-        {
-            Score.Instance.AddCoin(coinValue);
-        }
-
-        // play effects
-        if (collectParticles != null)
-        {
-            ParticleSystem particles = Instantiate(collectParticles, transform.position, Quaternion.identity);
-            Destroy(particles.gameObject, 2f);
-        }
-
-        if (collectSound != null)
-        {
-            AudioSource.PlayClipAtPoint(collectSound, transform.position);
-        }
-
-        // disable visual components
-        GetComponentInChildren<Renderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-
-        // after effects finish
-        Destroy(gameObject, 2f);
-    }
+    isCollected = true;
+  }
 }

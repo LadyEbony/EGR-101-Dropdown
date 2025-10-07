@@ -12,6 +12,7 @@ public class PlayerDriver : MonoBehaviour
     public new Rigidbody rigidbody;
     public animationStateController animatorState;
     public GameObject projectile;
+    public GameObject projectileParticles;
 
     public float horizontalSpeed = 10f;
     public float verticalSpeed = -10f;
@@ -85,6 +86,8 @@ public class PlayerDriver : MonoBehaviour
             limiterBypassDuration = 1.5f;
             Instantiate(projectile, transform.position, Quaternion.identity);
 
+            var copy = Instantiate(projectileParticles, transform.position, Quaternion.identity);
+            Destroy(copy, 5f);
         }
 
         /* // This way might work
