@@ -34,6 +34,7 @@ public class PlayerDriver : MonoBehaviour
     public float timeBeforeParachuteNextUse = 8f; // seconds
 
     public UnityEngine.UI.Image parachuteCooldownImage;
+    public UnityEngine.UI.Image shootCooldownImage;
 
     [Header("Pushback")]
     public GameObject pushbackPrefab;
@@ -44,6 +45,7 @@ public class PlayerDriver : MonoBehaviour
     [Header("ShootTimeDelay")]
     public float shootTimeDelay = 10f;
     private float shootStartTime;
+    public AnimationCurve shootSizeAnimationCurve;
 
     //public Vector3 velocity;
 
@@ -60,7 +62,7 @@ public class PlayerDriver : MonoBehaviour
     {
         Instance = this;
 
-        shootStartTime = Time.time;
+        shootStartTime = Time.time - shootTimeDelay * 0.5f;
         limiterBypassStartTime = Time.time;
         pushbackInputDisableStartTime = Time.time;
     }
@@ -90,9 +92,15 @@ public class PlayerDriver : MonoBehaviour
             Destroy(copy, 5f);
         }
 
+        HandleParachuteCooldown();
+        HandleShootCooldown();
+    }
+
+    void HandleParachuteCooldown()
+    {
         /* // This way might work
-        parachuteCooldownImage.fillAmount = Mathf.Clamp01((parachuteCooldownEndTime - Time.time) / timeBeforeParachuteNextUse);
-        parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.white : Color.gray; */
+parachuteCooldownImage.fillAmount = Mathf.Clamp01((parachuteCooldownEndTime - Time.time) / timeBeforeParachuteNextUse);
+parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.white : Color.gray; */
 
         // how much cooldown time is left (0 if ready)
         float remainingCooldown = Mathf.Max(0f, parachuteCooldownEndTime - Time.time);
@@ -100,22 +108,38 @@ public class PlayerDriver : MonoBehaviour
         // fill amount (1 = fully cooling down, 0 = ready)
         parachuteCooldownImage.fillAmount = remainingCooldown / timeBeforeParachuteNextUse;
 
-        if (remainingCooldown > timeBeforeParachuteNextUse / 2f) {
+        if (remainingCooldown > timeBeforeParachuteNextUse / 2f)
+        {
             parachuteCooldownImage.color = Color.red;
-        } else if (remainingCooldown > 0f) {
+        }
+        else if (remainingCooldown > 0f)
+        {
             parachuteCooldownImage.color = Color.yellow;
-        } else { // TODO: this never happens
+        }
+        else
+        { // TODO: this never happens
             parachuteCooldownImage.color = Color.blue;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    void HandleShootCooldown()
     {
-        if (other.CompareTag("Coin"))
-        {
-            // coin will handle its own collection logic
-            // we can add player specific effects here if needed
-        }
+
+        var cd = InverseLerpUnclamped(0f, shootTimeDelay, Time.time - shootStartTime);
+
+        shootCooldownImage.fillAmount = cd;
+
+        var ulerp = Mathf.InverseLerp(1f, 1.1f, cd);
+        var c = Color.Lerp(Color.white, Color.cyan, ulerp);
+        c.a = Mathf.InverseLerp(2f, 1.5f, cd);
+        shootCooldownImage.color = c;
+
+        shootCooldownImage.transform.localScale = shootSizeAnimationCurve.Evaluate(ulerp) * Vector3.one;
+    }
+
+    float InverseLerpUnclamped(float a, float b, float value)
+    {
+        return Mathf.Max(0f, (value - a) / (b - a));
     }
 
     private void FixedUpdate()
