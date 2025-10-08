@@ -79,7 +79,7 @@ public class PlayerDriver : MonoBehaviour
             Debug.Log("shoot");
             // shoot logic
             var v = rigidbody.velocity;
-            v.y = 10f;
+            v.y = 5.5f;
             rigidbody.velocity = v;
 
             shootStartTime = Time.time;
