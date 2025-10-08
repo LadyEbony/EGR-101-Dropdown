@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: -7287649104126053682}
   launchForce: 10
-  destroyAfterSeconds: 5
+  destroyAfterSeconds: 1
 --- !u!33 &-1752740335966213930
 MeshFilter:
   m_ObjectHideFlags: 0
