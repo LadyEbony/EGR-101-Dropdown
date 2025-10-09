@@ -97,7 +97,7 @@ public class GameUI : MonoBehaviour {
    
     void UpdateTextMesh(TextMeshProUGUI textMesh, int score)
     {
-        textMesh.text = string.Format("{0:000000}", score);
+        textMesh.text = string.Format("${0:000000}", score);
     }
 
     void SetColor(Graphic g, Color color)
@@ -124,12 +124,12 @@ public class GameUI : MonoBehaviour {
         if (newScore > highestScore)
         {
             highestScore = newScore;
-            highScoreText.text = $"!! NEW HIGH SCORE !! {highestScore}";
+            highScoreText.text = $"!! NEW HIGH SCORE !! ${highestScore}";
 
             StartCoroutine(FlashGraphic(highScoreText));
         } else
         {
-            highScoreText.text = $"HIGH SCORE: {highestScore}";
+            highScoreText.text = $"HIGH SCORE: ${highestScore}";
         }
 
         var t = 0f;
