@@ -19,6 +19,7 @@ public class GameUI : MonoBehaviour {
 
     [Header("Death")]
     public Graphic[] deathGraphics;
+    public TextMeshProUGUI deathScoreText;
     private bool playedDeathAnimation;
 
     [Header("Score")]
@@ -85,10 +86,15 @@ public class GameUI : MonoBehaviour {
         updating = true;
       }
 
-      scoreText.text = string.Format("{0:000000}", Mathf.RoundToInt(prevScore));
+        UpdateTextMesh(scoreText, Mathf.RoundToInt(prevScore));
       scoreText.color = Color.Lerp(scoreText.color, updating ? Color.yellow : Color.white, Time.deltaTime * 4f);
     }
    
+    void UpdateTextMesh(TextMeshProUGUI textMesh, int score)
+    {
+        textMesh.text = string.Format("{0:000000}", score);
+    }
+
     void SetAlpha(Graphic g, float alpha)
     {
         var c = g.color;
@@ -98,6 +104,8 @@ public class GameUI : MonoBehaviour {
 
     IEnumerator DoDeathAnimation()
     {
+        UpdateTextMesh(deathScoreText, Mathf.RoundToInt(score));
+
         var t = 0f;
         var vb = vigenette.intensity.value;
 
@@ -109,11 +117,18 @@ public class GameUI : MonoBehaviour {
             foreach (var d in deathGraphics) SetAlpha(d, lerp);
             vigenette.intensity.value = Mathf.Lerp(vb, 1f, lerp);
 
+            AudioListener.volume = 1f - lerp;
+
             yield return null;
         }
 
         yield return new WaitForSeconds(1f);
+        while (!Input.GetKeyDown(KeyCode.Space))
+        {
+            yield return null;
+        }
 
+        AudioListener.volume = 1f;
         SceneManager.LoadScene(0);
     }
 }

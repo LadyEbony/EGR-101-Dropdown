@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ZoneManager : MonoBehaviour {
@@ -20,13 +21,48 @@ public class ZoneManager : MonoBehaviour {
 
         var randomStream = new System.Random(seed);
        
+        var list = new List<GameObject>();
+        GameObject last = null;
+
+        GameObject GetNext()
+        {
+            if (list.Count == 0)
+            {
+                list = prefabs.ToList();
+                Shuffle(list, randomStream);
+
+                if (list[list.Count - 1] == last)
+                {
+                    list.RemoveAt(list.Count - 1);
+                }
+            }
+
+            var pop = list[list.Count - 1];
+            list.RemoveAt(list.Count - 1);
+            last = pop;
+
+            return pop;
+        }
+
         for (var i = 0; i < copies; i++) {
-            var index = randomStream.Next(prefabs.Length);
-            var item = prefabs[index];
+            var item = GetNext();
 
             var position = new Vector3(0f, -height * i, 0f);
 
             Instantiate(item, position, Quaternion.identity);
+        }
+    }
+
+    public static void Shuffle<T>(List<T> array, System.Random rng)
+    {
+        int n = array.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);  // Random index from 0 to n
+            T value = array[k];
+            array[k] = array[n];
+            array[n] = value;
         }
     }
 
