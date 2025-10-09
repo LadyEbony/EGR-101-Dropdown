@@ -23,14 +23,19 @@ public class GameUI : MonoBehaviour {
     private bool playedDeathAnimation;
 
     [Header("Score")]
-    public TextMeshProUGUI scoreText;    
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
     public float score = 0;
     public float prevScore = 0;
+
+    public static int highestScore = 1000;
 
     private void Awake()
     {
       Instance = this;
         volume.profile.TryGet(out vigenette);
+
+        foreach (var g in deathGraphics) SetAlpha(g, 0f);
     }
 
     private void LateUpdate()
@@ -95,6 +100,15 @@ public class GameUI : MonoBehaviour {
         textMesh.text = string.Format("{0:000000}", score);
     }
 
+    void SetColor(Graphic g, Color color)
+    {
+        var c = g.color;
+        c.r = color.r;
+        c.g = color.g;
+        c.b = color.b;
+        g.color = c;
+    }
+
     void SetAlpha(Graphic g, float alpha)
     {
         var c = g.color;
@@ -104,7 +118,19 @@ public class GameUI : MonoBehaviour {
 
     IEnumerator DoDeathAnimation()
     {
-        UpdateTextMesh(deathScoreText, Mathf.RoundToInt(score));
+        var newScore = Mathf.RoundToInt(score);
+        UpdateTextMesh(deathScoreText, newScore);
+
+        if (newScore > highestScore)
+        {
+            highestScore = newScore;
+            highScoreText.text = $"!! NEW HIGH SCORE !! {highestScore}";
+
+            StartCoroutine(FlashGraphic(highScoreText));
+        } else
+        {
+            highScoreText.text = $"HIGH SCORE: {highestScore}";
+        }
 
         var t = 0f;
         var vb = vigenette.intensity.value;
@@ -130,5 +156,16 @@ public class GameUI : MonoBehaviour {
 
         AudioListener.volume = 1f;
         SceneManager.LoadScene(0);
+    }
+
+    IEnumerator FlashGraphic(Graphic g)
+    {
+        while (true)
+        {
+            SetColor(highScoreText, Color.white);
+            yield return new WaitForSeconds(0.2f);
+            SetColor(highScoreText, Color.yellow);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 }
