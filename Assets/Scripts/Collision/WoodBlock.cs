@@ -20,5 +20,7 @@ public class WoodBlock : CollisionBlock {
 
     disabled = true;
     Destroy(gameObject);
-  }
+
+        GameUI.Instance.AddScore(10);
+    }
 }
