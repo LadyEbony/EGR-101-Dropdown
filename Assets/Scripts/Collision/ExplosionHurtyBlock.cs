@@ -32,5 +32,7 @@ public class ExplosionHurtyBlock : CollisionBlock {
 
     disabled = true;
     Destroy(gameObject);
+
+    GameUI.Instance.AddScore(200);
   }
 }

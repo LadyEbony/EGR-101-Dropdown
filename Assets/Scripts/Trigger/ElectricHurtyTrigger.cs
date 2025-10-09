@@ -41,7 +41,9 @@ public class ElectricHurtyTrigger : TriggerItem {
     Destroy(copy, 5f);
 
     StartCoroutine(Retrigger());
-  }
+
+        GameUI.Instance.AddScore(200);
+    }
 
   IEnumerator Retrigger(){
     yield return new WaitForSeconds(disableTimer);
