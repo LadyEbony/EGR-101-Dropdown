@@ -6,6 +6,8 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour {
 
     public GameObject[] prefabs;
+    public GameObject prefabForceFirst;
+
     public float height = 16f;
     public int copies = 128;
 
@@ -30,6 +32,11 @@ public class ZoneManager : MonoBehaviour {
             {
                 list = prefabs.ToList();
                 Shuffle(list, randomStream);
+
+                if (prefabForceFirst != null)
+                {
+                    list[list.Count - 1] = prefabForceFirst;
+                }
 
                 if (list[list.Count - 1] == last)
                 {
