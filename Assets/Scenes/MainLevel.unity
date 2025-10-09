@@ -154,6 +154,7 @@ MonoBehaviour:
   - {fileID: 4658332755720597893, guid: 0e019a9731ef51047898b548ff8989ad, type: 3}
   - {fileID: 3027215943169352040, guid: 42480ef4ec2eb2d428f99a37be410423, type: 3}
   - {fileID: 4799826935538990027, guid: ff4b9766d6bf3c64d807ce8a661abb68, type: 3}
+  - {fileID: 1583686053268458688, guid: 1355478f358046f47a4ab144296cbf3b, type: 3}
   height: 50
   copies: 128
   randomizeSeed: 1
