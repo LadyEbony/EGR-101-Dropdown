@@ -2032,6 +2032,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 5896046706678122513, guid: 4e2d6731a12492c409c5f519dfd77d0a,
+        type: 3}
+      propertyPath: shootTimeDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6451567424347861881, guid: 4e2d6731a12492c409c5f519dfd77d0a,
         type: 3}
       propertyPath: m_LocalPosition.x
