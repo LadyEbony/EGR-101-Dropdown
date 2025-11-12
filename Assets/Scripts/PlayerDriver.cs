@@ -18,16 +18,23 @@ public class PlayerDriver : MonoBehaviour
     public float verticalSpeed = -10f;
     public float horizontalAccelerationSpeed = 80f;
     public float verticalAccelerationSpeed = -9.8f;
+    // Add this field near your other float variables:
+    [Header("Falling Speed Increase (for testing)")]
+    public float fallSpeedIncreaseRate = 1e-20000f; // Falling Speed Rate
+    private float fallSpeedMultiplier = 1f;
+
 
     public bool isDead;
+
 
     [Header("Temporary Bypass Limiters")]
     public float limiterBypassDuration = 0.5f;
     private float limiterBypassStartTime;
 
     [Header("Parachuting")]
-    public float parachuteSpeedscaler = 0.5f;
+    public float parachuteSpeedscaler = 0.05f;
     public bool isSlowFalling = false;
+    public bool isInvincible = false;
     public float parachuteStartTime;
     public float parachuteCooldownEndTime;
     public float timeLimitForParachuteUse = 4.5f; // seconds
@@ -161,6 +168,9 @@ parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.whi
                 parachuteCooldownEndTime = Time.time + 6f; 
             }
         }
+        // Update invincibility status based on parachute state
+        isInvincible = isSlowFalling;
+
 
         var velocity = rigidbody.velocity;
         var disableLerp = Mathf.InverseLerp(0f, pushbackInputDisableTime, Time.time - pushbackInputDisableStartTime);
@@ -180,11 +190,44 @@ parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.whi
 
         //pushBackTime = Mathf.MoveTowards(pushBackTime, 0f, Time.deltaTime);
 
-        // gravity
-        velocity += new Vector3(0f, verticalAccelerationSpeed) * Time.fixedDeltaTime;
-        // terminal velocity
-        var terminalVel = verticalSpeed;
-        if (isSlowFalling) terminalVel *= parachuteSpeedscaler;
+        // Increase falling speed multiplier over time (progressive difficulty)
+            // Smoothly ramp up fall speed toward a limit (prevents runaway acceleration)
+            if (!isSlowFalling)
+            {
+                float maxMultiplier = 3f;
+                float growthRate = 0.0050f; // ~7 minutes to reach 3x speed
+                fallSpeedMultiplier = Mathf.Lerp(
+                    fallSpeedMultiplier,
+                    maxMultiplier,
+                    growthRate * Time.fixedDeltaTime
+                );
+            }
+
+
+
+
+
+        // Apply multiplier to vertical acceleration and terminal velocity
+        float adjustedVerticalAcceleration = verticalAccelerationSpeed * fallSpeedMultiplier;
+        float adjustedVerticalSpeed = verticalSpeed * fallSpeedMultiplier;
+
+
+        // gravity (progressively stronger)
+        velocity += new Vector3(0f, adjustedVerticalAcceleration) * Time.fixedDeltaTime;
+        // Apply strong upward drag when parachute is active
+        if (isSlowFalling)
+        {
+            // the higher this number, the faster you slow down
+            float parachuteBrakeStrength = 20f;
+            velocity = Vector3.Lerp(velocity, new Vector3(velocity.x, -verticalSpeed * parachuteSpeedscaler), parachuteBrakeStrength * Time.fixedDeltaTime);
+        }
+
+
+        // terminal velocity (progressively faster)
+        var terminalVel = adjustedVerticalSpeed;
+
+
+        // clamp velocity so it doesn’t exceed terminal speed
         velocity.x = Mathf.Clamp(velocity.x, -horizontalSpeed * maxVelocityScaler, horizontalSpeed * maxVelocityScaler);
         velocity.y = Mathf.Clamp(velocity.y, -terminalVel, verticalSpeed * maxVelocityScaler);
 
@@ -241,6 +284,8 @@ parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.whi
 
     public void Damage()
     {
+        if (isInvincible) return; // ignore damage while parachuting
+
         health -= 1;
         if (health <= 0)
         {
@@ -250,9 +295,11 @@ parachuteCooldownImage.color = parachuteCooldownEndTime <= Time.time ? Color.whi
         hurtAudioSource.PlayOneShot(hurtAudioSource.clip);
     }
 
+
     public void Kill()
     {
         isDead = true;
+        fallSpeedMultiplier = 1f; // reset falling speed increase
     }
 
 }

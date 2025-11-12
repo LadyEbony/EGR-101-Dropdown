@@ -1438,7 +1438,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Use LEFT/RIGHT (A/D) to MOVE\nPress DOWN (S) to SHOOT \nHold UP (W) to
-    PARACHUTE"
+    use the PARA-SHIELD"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0ec9e7e1dfdd26b43a1b6ba15a612703, type: 2}
   m_sharedMaterial: {fileID: -2228618046177457866, guid: 0ec9e7e1dfdd26b43a1b6ba15a612703,
@@ -2081,8 +2081,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 291, y: -260}
-  m_SizeDelta: {x: -320, y: 1080}
+  m_AnchoredPosition: {x: 350.5, y: -260}
+  m_SizeDelta: {x: -201, y: 1060}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033932182
 MonoBehaviour:
